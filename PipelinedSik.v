@@ -335,7 +335,7 @@ begin
 	end
 	
     	default: begin halt[thread[1]] <= 1; 
-	 $display("default: %d", s);
+		$display("1default");
 	end
 	endcase
 
@@ -549,7 +549,7 @@ begin
 	end
 	
     	default: begin halt[thread[2]] <= 1; 
-	 $display("default: %d", s);
+		$display("2default");
 	end
 	
 	endcase
@@ -718,7 +718,7 @@ begin
 	end
 	
     	default: begin halt[thread[2]] <= 1; 
-	 $display("default: %d", s);
+		$display("3default");
 	end
 	
 	endcase
