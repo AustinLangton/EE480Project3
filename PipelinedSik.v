@@ -343,7 +343,6 @@ always @(posedge clk)
 begin
 	//register values are handled
     	case (s[2])
-		$display("i: %d", i);
     	`Start: begin 
 		//this shouldn't happen, but if it does it's a nop
 		pcwriteflag = 0;
