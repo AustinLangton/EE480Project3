@@ -91,8 +91,8 @@ always @(reset) begin
   halt [0] = 0;
 
   //stage 0
-  pc [1] = 0; 
-  pc [0] = 0;
+  pc [1] = -1; 
+  pc [0] = -1;
   thread[0] = 0;//starts with thread 0
 
   //stage 1
