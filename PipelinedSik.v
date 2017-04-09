@@ -186,6 +186,7 @@ begin
 	case (s[1])
     	`Start: begin 
 		//this shouldn't happen, but if it does it's a nop
+		$display("Nop");
 	end
    	`Nop: begin
       		//nothing
@@ -195,36 +196,42 @@ begin
         	dest[1] = {thread[1], sp[thread[1]] - 1'b1};//top bit in register number is the thread number (thus giving half the stack to each thread)
 		src[1] = {thread[1], sp[thread[1]]};
 		sp[thread[1]] = sp[thread[1]] - 1'b1;
+		$display("Add");
 	end
 	`SubOp: begin 
 	//d=sp-1; s=sp; --sp; reg[d]-=reg[s];
                 dest[1] = {thread[1], sp[thread[1]] - 1'b1};//top bit in register number is the thread number (thus giving half the stack to each thread)
 		src[1] = {thread[1], sp[thread[1]]};
 		sp[thread[1]] = sp[thread[1]] - 1'b1;
+		$display("Sub");
 	end
 	`OrOp: begin
 	//d=sp-1; s=sp; --sp; reg[d]|=reg[s];
                 dest[1] = {thread[1], sp[thread[1]] - 1'b1};//top bit in register number is the thread number (thus giving half the stack to each thread)
 		src[1] = {thread[1], sp[thread[1]]};
 		sp[thread[1]] = sp[thread[1]] - 1'b1;
+		$display("Or");
 	end
 	`XorOp: begin 
 	//d=sp-1; s=sp; --sp; reg[d]^=reg[s];
                 dest[1] = {thread[1], sp[thread[1]] - 1'b1};//top bit in register number is the thread number (thus giving half the stack to each thread)
 		src[1] = {thread[1], sp[thread[1]]};
 		sp[thread[1]] = sp[thread[1]] - 1'b1;
+		$display("Xor");
 	end
 	`LtOp: begin 
 	//d=sp-1; s=sp; --sp; reg[d]=(reg[d] < reg[s]);
                 dest[1] = {thread[1], sp[thread[1]] - 1'b1};//top bit in register number is the thread number (thus giving half the stack to each thread)
 		src[1] = {thread[1], sp[thread[1]]};
 		sp[thread[1]] = sp[thread[1]] - 1'b1;
+		$display("Lt");
 	end
 	`AndOp: begin 
 	//d=sp-1; s=sp; --sp; reg[d]&=reg[s];
                 dest[1] = {thread[1], sp[thread[1]] - 1'b1};//top bit in register number is the thread number (thus giving half the stack to each thread)
 		src[1] = {thread[1], sp[thread[1]]};
 		sp[thread[1]] = sp[thread[1]] - 1;
+		$display("And");
 	end	
 	
 	`GetOp: begin
@@ -232,44 +239,52 @@ begin
                 dest[1] = {thread[1], sp[thread[1]] + 1'b1};//you get the picture
 		src[1] = {thread[1], sp[thread[1]] - ir `IMMEDIATE};
 		sp[thread[1]] = sp[thread[1]] + 1;
+		$display("Get");
 	end
 	
 	`PopOp: begin
 	//sp-=unsigned(immed12);
                 sp[thread[1]] = sp[thread[1]] - ir `IMMEDIATE;
+		$display("Pop");
 	end
 	
 	`PutOp: begin
 	//d=sp-unsigned(immed12); s=sp; reg[d]=reg[s];
 		dest[1] = {thread[1], sp[thread[1]] - ir `IMMEDIATE};
 		src[1] = {thread[1], sp[thread[1]]};
+		$display("Put");
 	end
 	
 	`CallOp: begin
 	//d=sp+1; ++sp; reg[d]=pc+1; pc=prefix({(pc>>12), immed12});
 		dest[1] = {thread[1], sp[thread[1]] + 1'b1};
 		sp[thread[1]] = sp[thread[1]] + 1;
+		$display("Call");
 	end	
 	
 	`JumpFOp: begin
 	//if (!torf) pc=prefix({(pc>>12), immed12});
 		//nothing till next stage
+		$display("JumpF");
 	end
 	
 	`JumpTOp: begin
 	//if (torf) pc=prefix({(pc>>12), immed12});
 		//nothing till next stage
+		$display("JumpT");
 	end
 	
 	`JumpOp: begin
 	//pc=prefix({(pc>>12), immed12});
 		//nothing till next stage
+		$display("Jump");
 	end
 
 	`PushOp: begin
 	//d=sp+1; ++sp; reg[d]=prefix(sign_extend(immed12));
                 dest[1] = {thread[1], sp[thread[1]] + 1'b1};
 		sp[thread[1]] = sp[thread[1]] + 1;
+		$display("Push");
 	end
 	
 	`DupOp: begin
@@ -277,17 +292,20 @@ begin
 		dest[1] = {thread[1], sp[thread[1]] + 1'b1};
 		src[1] = {thread[1], sp[thread[1]]};
 		sp[thread[1]] = sp[thread[1]] + 1;
+		$display("Dup");
 	end
 	
 	`LoadOp: begin
 	//d=sp; reg[d]=mem[reg[d]];
                 dest[1] = {thread[1], sp[thread[1]]};
+		$display("Load");
 	end
 	
 	`ReturnOp: begin
 	//s=sp; --sp; pc=reg[s];
 		src[1] = {thread[1], sp[thread[1]]};
 		sp[thread[1]] = sp[thread[1]] - 1;
+		$display("Return");
 	end
 	
 	`StoreOp: begin
@@ -295,21 +313,25 @@ begin
                 dest[1] = {thread[1], sp[thread[1]] - 1'b1};//top bit in register number is the thread number (thus giving half the stack to each thread)
 		src[1] = {thread[1], sp[thread[1]]};
 		sp[thread[1]] = sp[thread[1]] - 1;
+		$display("Store");
 	end
 	
 	`SystemOp: begin                 
 		halt[thread[1]] <= 1;
+		$display("System");
 	end
 	
 	`TestOp: begin
 	//s=sp; --sp; torf = (reg[s] != 0);
 		src[1] = {thread[1], sp[thread[1]]};
 		sp[thread[1]] = sp[thread[1]] - 1;
+		$display("Test");
 	end
 	
 	`PreOp: begin
 	//pre=unsigned(immed16)>>12;
 		//nothing till next stage
+		$display("Pre");
 	end
 	
     	default: begin halt[thread[1]] <= 1; end
@@ -329,6 +351,7 @@ begin
    	`Nop: begin
       		//nothing
 		pcwriteflag = 0;
+		$display("2Nop");
     	end
     	`AddOp: begin 
 	//d=sp-1; s=sp; --sp; reg[d]+=reg[s];
@@ -336,6 +359,7 @@ begin
 		data[2] = stackregs[dest[2]];
 		addr[2] = stackregs[src[2]];
 		pcwriteflag = 0;
+		$display("2Add");
 		
 	end
 	`SubOp: begin 
@@ -344,6 +368,7 @@ begin
 		data[2] = stackregs[dest[2]];
 		addr[2] = stackregs[src[2]];
 		pcwriteflag = 0;
+		$display("2Sub");
 	end
 	`OrOp: begin
 	//d=sp-1; s=sp; --sp; reg[d]|=reg[s];
@@ -351,6 +376,7 @@ begin
 		data[2] = stackregs[dest[2]];
 		addr[2] = stackregs[src[2]];
 		pcwriteflag = 0;
+		$display("2Or");
 	end
 	`XorOp: begin 
 	//d=sp-1; s=sp; --sp; reg[d]^=reg[s];
@@ -358,6 +384,7 @@ begin
 		data[2] = stackregs[dest[2]];
 		addr[2] = stackregs[src[2]];
 		pcwriteflag = 0;
+		$display("2Xor");
 	end
 	`LtOp: begin 
 	//d=sp-1; s=sp; --sp; reg[d]=(reg[d] < reg[s]);
@@ -365,6 +392,7 @@ begin
 		data[2] = stackregs[dest[2]];
 		addr[2] = stackregs[src[2]];
 		pcwriteflag = 0;
+		$display("2Lt");
 	end
 	`AndOp: begin 
 	//d=sp-1; s=sp; --sp; reg[d]&=reg[s];
@@ -372,24 +400,28 @@ begin
 		data[2] = stackregs[dest[2]];
 		addr[2] = stackregs[src[2]];
 		pcwriteflag = 0;
+		$display("2And");
 	end	
 	
 	`GetOp: begin
 	//d=sp+1; s=sp-unsigned(immed12); ++sp; reg[d]=reg[s];
                 stackregs[dest[2]] = stackregs[src[2]];//taken care of
 		pcwriteflag = 0;
+		$display("2Get");
 	end
 	
 	`PopOp: begin
 	//sp-=unsigned(immed12);
                 //nothing
 		pcwriteflag = 0;
+		$display("2Pop");
 	end
 	
 	`PutOp: begin
 	//d=sp-unsigned(immed12); s=sp; reg[d]=reg[s];
 		stackregs[dest[2]] = stackregs[src[2]];//taken care of
 		pcwriteflag = 0;
+		$display("2Put");
 	end
 	
 	`CallOp: begin
@@ -403,6 +435,7 @@ begin
 		end
 		loaded[thread[2]] = 0;
 		pcwriteflag = 1;
+		$display("2Call");
 	end	
 	
 	`JumpFOp: begin
@@ -416,6 +449,7 @@ begin
 			end
 			loaded[thread[2]] = 0;
 			pcwriteflag = 1;
+			$display("2JumpF");
 		end
 		else begin 
 			pcwriteflag = 0;
@@ -433,6 +467,7 @@ begin
 			end
 			loaded[thread[2]] = 0;
 			pcwriteflag = 1;
+			$display("2JumpT");
 		end
 		else begin 
 			pcwriteflag = 0;
@@ -449,6 +484,7 @@ begin
 		end
 		loaded[thread[2]] = 0;
 		pcwriteflag = 1;
+		$display("2Jump");
 	end
 
 	`PushOp: begin
@@ -461,6 +497,7 @@ begin
 	//d=sp+1; s=sp; ++sp; reg[d]=reg[s];
 		stackregs[dest[2]] = stackregs[src[2]];//taken care of
 		pcwriteflag = 0;
+		$display("2Dup");
 	end
 	
 	`LoadOp: begin
@@ -468,12 +505,14 @@ begin
                 writeDest[2] = dest[2];
 		addr[2] = stackregs[dest[2]];
 		pcwriteflag = 0;
+		$display("2Load");
 	end
 	
 	`ReturnOp: begin
 	//s=sp; --sp; pc=reg[s];
 		pcwrite = stackregs[src[2]];
 		pcwriteflag = 1;
+		$display("2Return");
 	end
 	
 	`StoreOp: begin
@@ -482,17 +521,20 @@ begin
 		addr[2] = stackregs[dest[2]];
 		data[2] = stackregs[src[2]];
 		pcwriteflag = 0;
+		$display("2Store");
 	end
 	
 	`SystemOp: begin                 
 		//the thread should be halted by now
 		pcwriteflag = 0;
+		$display("2System");
 	end
 	
 	`TestOp: begin
 	//s=sp; --sp; torf = (reg[s] != 0);
 		//leave it up to stage 3
 		pcwriteflag = 0;
+		$display("2Test");
 	end
 	
 	`PreOp: begin
@@ -500,6 +542,7 @@ begin
 		pre[thread[2]] = (immediate[2][3:0]);//pre is the bottom four bits of the immediate
 		loaded[thread[2]] = 1;
 		pcwriteflag = 0;
+		$display("2Pre");
 	end
 	
     	default: begin halt[thread[2]] <= 1; end
@@ -525,126 +568,148 @@ begin
 	end
    	`Nop: begin
       		//nothing
-		regwriteflag = 0;	
+		regwriteflag = 0;
+		$display("3Nop");
     	end
     	`AddOp: begin 
 	//d=sp-1; s=sp; --sp; reg[d]+=reg[s];
         	writeData = data[3] + addr[3];
 		regwriteflag = 1;
+		$display("3Add");
 	end
 	`SubOp: begin 
 	//d=sp-1; s=sp; --sp; reg[d]-=reg[s];
                 writeData = data[3] - addr[3];
 		regwriteflag = 1;
+		$display("3Sub");
 	end
 	`OrOp: begin
 	//d=sp-1; s=sp; --sp; reg[d]|=reg[s];
                 writeData = data[3] | addr[3];
 		regwriteflag = 1;
+		$display("3Or");
 	end
 	`XorOp: begin 
 	//d=sp-1; s=sp; --sp; reg[d]^=reg[s];
                 writeData = data[3] ^ addr[3];
 		regwriteflag = 1;
+		$display("3Xor");
 	end
 	`LtOp: begin 
 	//d=sp-1; s=sp; --sp; reg[d]=(reg[d] < reg[s]);
                 writeData = data[3] < addr[3];
 		regwriteflag = 1;
+		$display("3Lt");
 	end
 	`AndOp: begin 
 	//d=sp-1; s=sp; --sp; reg[d]&=reg[s];
                 writeData = data[3] & addr[3];
 		regwriteflag = 1;
+		$display("3And");
 	end	
 	
 	`GetOp: begin
 	//d=sp+1; s=sp-unsigned(immed12); ++sp; reg[d]=reg[s];
                 //taken care of
 		regwriteflag = 0;
+		$display("3Get");
 	end
 	
 	`PopOp: begin
 	//sp-=unsigned(immed12);
                 //nothing
 		regwriteflag = 0;
+		$display("3Pop");
 	end
 	
 	`PutOp: begin
 	//d=sp-unsigned(immed12); s=sp; reg[d]=reg[s];
 		//taken care of
 		regwriteflag = 0;
+		$display("3Put");
 	end
 	
 	`CallOp: begin
 	//d=sp+1; ++sp; reg[d]=pc+1; pc=prefix({(pc>>12), immed12});
 		//taken care of
 		regwriteflag = 0;
+		$display("3Call");
 	end	
 	
 	`JumpFOp: begin
 	//if (!torf) pc=prefix({(pc>>12), immed12});
 		//taken care of
 		regwriteflag = 0;
+		$display("3JumpF");
 	end
 	
 	`JumpTOp: begin
 	//if (torf) pc=prefix({(pc>>12), immed12});
 		//taken care of
 		regwriteflag = 0;
+		$display("3JumpT");
 	end
 	
 	`JumpOp: begin
 	//pc=prefix({(pc>>12), immed12});
 		//taken care of
 		regwriteflag = 0;
+		$display("3Jump");
 	end
 
 	`PushOp: begin
 	//d=sp+1; ++sp; reg[d]=prefix(sign_extend(immed12));
                 //taken care of
 		regwriteflag = 0;
+		$display("3Push");
 	end
 	
 	`DupOp: begin
 	//d=sp+1; s=sp; ++sp; reg[d]=reg[s];
 		//taken care of
 		regwriteflag = 0;
+		$display("3Dup");
 	end
 	
 	`LoadOp: begin
 	//d=sp; reg[d]=mem[reg[d]];
                 writeData = mainmem[{thread[3], addr[3]}];
 		regwriteflag = 0;
+		$display("3Load");
 	end
 	
 	`ReturnOp: begin
 	//s=sp; --sp; pc=reg[s];
 		//taken care of
 		regwriteflag = 0;
+		$display("3Return");
 	end
 	
 	`StoreOp: begin
 	//d=sp-1; s=sp; --sp; mem[reg[d]]=reg[s]; reg[d]=reg[s];
                 mainmem[{thread[3], addr[3]}] = data[3];
 		regwriteflag = 0;
+		$display("Store");
 	end
 	
 	`SystemOp: begin                 
 		//the thread should be halted by now
 		regwriteflag = 0;
+		$display("3System");
 	end
 	
 	`TestOp: begin
 	//s=sp; --sp; torf = (reg[s] != 0);
 		torf[thread[2]] = (stackregs[src[2]] != 0);
 		regwriteflag = 0;
+		$display("3test");
 	end
 	
 	`PreOp: begin
 	//pre=unsigned(immed16)>>12;
 		//taken care of
 		regwriteflag = 0;
+		$display("3Pre");
 	end
 	
     	default: begin halt[thread[2]] <= 1; end
