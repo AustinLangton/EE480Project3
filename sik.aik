@@ -1,0 +1,18 @@
+.NOARGALU := 15:4 .this:12
+.alias .NOARGALU 16 Add Sub Or Xor Lt And
+
+.TWELVEBIT .a := .this:4 .a:12
+.alias .TWELVEBIT 0 Get Pop Put
+
+.SIXTEENBIT .a ?((.this & 0xf000) == (.a & 0xf000)) := .this:4 .a:12
+.SIXTEENBIT .a := 14:4 (.a >> 12):12 .this:4 .a:12
+.alias .SIXTEENBIT 3 Call JumpF JumpT Jump Push
+
+.NOARG := .this:4 4095:12
+.alias .NOARG 8 Dup Load Ret Store Sys Test
+
+Pre .a := 14:4 (.a >> 12):12
+
+;.segment .text 8 0x1000000 0 .VMEM
+;.segment .data 8 0x1000000 0 .VMEM
+.const 0 .lowfirst
