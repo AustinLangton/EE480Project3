@@ -736,6 +736,10 @@ module testbench;
  	   		#10 clk = 1;
     			#10 clk = 0;
   		end
+		for( i = 0; i < 6; i = i + 1) begin
+                #10 clk = 1;
+		#10 clk = 0;
+                end
   		$finish;
 	end
 endmodule
