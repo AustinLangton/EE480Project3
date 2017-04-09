@@ -186,7 +186,6 @@ begin
 	case (s[1])
     	`Start: begin 
 		//this shouldn't happen, but if it does it's a nop
-		$display("1Nop");
 	end
    	`Nop: begin
       		//nothing
@@ -352,7 +351,6 @@ begin
    	`Nop: begin
       		//nothing
 		pcwriteflag = 0;
-		$display("2Nop");
     	end
     	`AddOp: begin 
 	//d=sp-1; s=sp; --sp; reg[d]+=reg[s];
@@ -571,7 +569,6 @@ begin
    	`Nop: begin
       		//nothing
 		regwriteflag = 0;
-		$display("3Nop");
     	end
     	`AddOp: begin 
 	//d=sp-1; s=sp; --sp; reg[d]+=reg[s];
