@@ -1,0 +1,28 @@
+	.text
+	.origin 0
+lab:	Add
+	And
+	Call	lab
+	Dup
+	Get	2
+	JumpF	lab
+	Jump	lab
+	JumpT	lab
+	Load
+	Lt
+	Or
+	Pop	1
+	Pre	8197
+	Push	lab3
+	Put	2
+	Ret
+	.data
+	.origin 0x8000
+lab3:	.word lab2
+	.text	; pick-up where we were
+	Store
+	Sub
+	Sys
+	Test
+	Xor
+lab2:
