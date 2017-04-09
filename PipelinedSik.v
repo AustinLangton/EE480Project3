@@ -554,6 +554,10 @@ begin
 		stackregs[writeDest[3]] = writeData;
 	end
 	//regwriteflag <= 0;
+	/* Print the first 5 registers in each thread of every clock cycle */
+	for( i = 0; i < 5; i = i + 1) begin
+                 $display("reg[i]: %d i: %d", stackregs[i], i);
+                end
 end
 
 //stage3
