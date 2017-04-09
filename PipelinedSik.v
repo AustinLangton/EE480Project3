@@ -334,9 +334,7 @@ begin
 		$display("1Pre");
 	end
 	
-    	default: begin halt[thread[1]] <= 1; 
-		$display("1default");
-	end
+    	default: begin halt[thread[1]] <= 1; end
 	endcase
 
 end
@@ -548,9 +546,7 @@ begin
 		$display("2Pre");
 	end
 	
-    	default: begin halt[thread[2]] <= 1; 
-		$display("2default");
-	end
+    	default: begin halt[thread[2]] <= 1; end
 	
 	endcase
 
@@ -717,9 +713,7 @@ begin
 		$display("3Pre");
 	end
 	
-    	default: begin halt[thread[2]] <= 1; 
-		$display("3default");
-	end
+    	default: begin halt[thread[2]] <= 1; end
 	
 	endcase
 
