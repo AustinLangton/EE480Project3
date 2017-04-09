@@ -735,7 +735,6 @@ module testbench;
  		while (!halted[1] | !halted[0]) begin //keep going until both threads halt
  	   		#10 clk = 1;
     			#10 clk = 0;
-			$display("i: %d", i);
   		end
   		$finish;
 	end
