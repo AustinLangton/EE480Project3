@@ -723,6 +723,7 @@ end
 endmodule
 
 module testbench;
+	reg [15:0] i;
 	reg reset = 0;
 	reg clk = 0;
 	wire [1:0] halted = 0;
