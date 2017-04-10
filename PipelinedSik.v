@@ -568,6 +568,7 @@ begin
 	for (k = 256; k < 261; k = k+1) begin
 		$display("reg[k]: %d k: %d", stackregs[k], k);
 	end
+	$display("");
 end
 
 //stage3
