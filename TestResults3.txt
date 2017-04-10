@@ -23,6 +23,11 @@ The following is an output of test cases folllowed by the first 5 registers in e
 thread of every clock cycle:
 
 
+*Our processor was caught in an infitinite loop when the programs are of uneven length,
+the threads write to the same halt for some reason.
+
+*The threads seem to write over each other seemingly at random.
+
 
 ********** Test 1 **********
 Instruction: Add 3 + 2
@@ -38,6 +43,124 @@ Assembly Instruction: Push 3
 f010
 cfff
 
+VCD info: dumpfile /home/kaos/IVER/58ebb8406ff3.vcd opened for output.
+WARNING: /home/kaos/IVER/58ebb8406ff3.v:128: $readmemh: Standard inconsistency, following 1364-2005.
+states: 30303030
+threads: 0xxx
+pc0:     0
+pc1:     0
+reg[i]:     x i:     0
+reg[i]:     x i:     1
+reg[i]:     x i:     2
+reg[i]:     x i:     3
+reg[i]:     x i:     4
+reg[k]:     x k:   256
+reg[k]:     x k:   257
+reg[k]:     x k:   258
+reg[k]:     x k:   259
+reg[k]:     x k:   260
+WARNING: /home/kaos/IVER/58ebb8406ff3.v:128: $readmemh: Standard inconsistency, following 1364-2005.
+WARNING: /home/kaos/IVER/58ebb8406ff3.v:128: $readmemh: Standard inconsistency, following 1364-2005.
+thread3: x
+thread2: x
+dest2:   x
+thread1: 0
+dest1:   x
+thread0: 0
+
+states: 30303030
+threads: 00xx
+pc0:     1
+pc1:     0
+reg[i]:     x i:     0
+reg[i]:     x i:     1
+reg[i]:     x i:     2
+reg[i]:     x i:     3
+reg[i]:     x i:     4
+reg[k]:     x k:   256
+reg[k]:     x k:   257
+reg[k]:     x k:   258
+reg[k]:     x k:   259
+reg[k]:     x k:   260
+thread0: 1
+1Push
+thread1: 0
+dest1: 256
+thread2: 0
+dest2:   x
+thread3: x
+
+states: 30 73030
+threads: 100x
+pc0:     1
+pc1:     1
+reg[i]:     x i:     0
+reg[i]:     x i:     1
+reg[i]:     x i:     2
+reg[i]:     x i:     3
+reg[i]:     x i:     4
+reg[k]:     x k:   256
+reg[k]:     x k:   257
+reg[k]:     x k:   258
+reg[k]:     x k:   259
+reg[k]:     x k:   260
+thread3: 0
+2Push
+thread2: 0
+dest2: 256
+fault1:  X
+thread1: 1
+dest1: 256
+thread0: 0
+
+states: 30 X 730
+threads: 0100
+pc0:     2
+pc1:     1
+reg[i]:     x i:     0
+reg[i]:     x i:     1
+reg[i]:     x i:     2
+reg[i]:     x i:     3
+reg[i]:     x i:     4
+reg[k]:     3 k:   256
+reg[k]:     x k:   257
+reg[k]:     x k:   258
+reg[k]:     x k:   259
+reg[k]:     x k:   260
+thread1: 0
+dest1: 256
+fault2:  X
+thread2: 1
+dest2: 256
+3Push
+thread3: 0
+
+states: 3030 X 7
+threads: 1010
+pc0:     2
+pc1:     1
+reg[i]:     x i:     0
+reg[i]:     x i:     1
+reg[i]:     x i:     2
+reg[i]:     x i:     3
+reg[i]:     x i:     4
+reg[k]:     3 k:   256
+reg[k]:     x k:   257
+reg[k]:     x k:   258
+reg[k]:     x k:   259
+reg[k]:     x k:   260
+thread3: 1
+thread2: 0
+dest2: 256
+thread1: 1
+dest1: 256
+thread0: 0
+
+
+
+
+
+
 
 ********** Test 2 **********
 Instruction: Sub 3 - 2
@@ -45,12 +168,331 @@ Instruction: Sub 3 - 2
 Assembly Instruction: Push 3 
                       Push 2
                       Sub
-                      Sys
+                      
 Encoding:@0000
 	 7003
 	 7002
  	 f011
 	 cfff
+
+VCD info: dumpfile /home/kaos/IVER/58ebb9ea7039.vcd opened for output.
+WARNING: /home/kaos/IVER/58ebb9ea7039.v:128: $readmemh: Standard inconsistency, following 1364-2005.
+states: 30303030
+threads: 0xxx
+pc0:     0
+pc1:     0
+reg[i]:     x i:     0
+reg[i]:     x i:     1
+reg[i]:     x i:     2
+reg[i]:     x i:     3
+reg[i]:     x i:     4
+reg[k]:     x k:   256
+reg[k]:     x k:   257
+reg[k]:     x k:   258
+reg[k]:     x k:   259
+reg[k]:     x k:   260
+WARNING: /home/kaos/IVER/58ebb9ea7039.v:128: $readmemh: Standard inconsistency, following 1364-2005.
+WARNING: /home/kaos/IVER/58ebb9ea7039.v:128: $readmemh: Standard inconsistency, following 1364-2005.
+thread3: x
+thread2: x
+dest2:   x
+thread1: 0
+dest1:   x
+thread0: 0
+
+states: 30303030
+threads: 00xx
+pc0:     1
+pc1:     0
+reg[i]:     x i:     0
+reg[i]:     x i:     1
+reg[i]:     x i:     2
+reg[i]:     x i:     3
+reg[i]:     x i:     4
+reg[k]:     x k:   256
+reg[k]:     x k:   257
+reg[k]:     x k:   258
+reg[k]:     x k:   259
+reg[k]:     x k:   260
+thread0: 1
+1Push
+thread1: 0
+dest1: 256
+thread2: 0
+dest2:   x
+thread3: x
+
+states: 30 73030
+threads: 100x
+pc0:     1
+pc1:     1
+reg[i]:     x i:     0
+reg[i]:     x i:     1
+reg[i]:     x i:     2
+reg[i]:     x i:     3
+reg[i]:     x i:     4
+reg[k]:     x k:   256
+reg[k]:     x k:   257
+reg[k]:     x k:   258
+reg[k]:     x k:   259
+reg[k]:     x k:   260
+thread3: 0
+2Push
+thread2: 0
+dest2: 256
+fault1:  X
+thread1: 1
+dest1: 256
+thread0: 0
+
+states: 30 X 730
+threads: 0100
+pc0:     2
+pc1:     1
+reg[i]:     x i:     0
+reg[i]:     x i:     1
+reg[i]:     x i:     2
+reg[i]:     x i:     3
+reg[i]:     x i:     4
+reg[k]:     3 k:   256
+reg[k]:     x k:   257
+reg[k]:     x k:   258
+reg[k]:     x k:   259
+reg[k]:     x k:   260
+thread1: 0
+dest1: 256
+fault2:  X
+thread2: 1
+dest2: 256
+3Push
+thread3: 0
+
+states: 3030 X 7
+threads: 1010
+pc0:     2
+pc1:     1
+reg[i]:     x i:     0
+reg[i]:     x i:     1
+reg[i]:     x i:     2
+reg[i]:     x i:     3
+reg[i]:     x i:     4
+reg[k]:     3 k:   256
+reg[k]:     x k:   257
+reg[k]:     x k:   258
+reg[k]:     x k:   259
+reg[k]:     x k:   260
+thread3: 1
+thread2: 0
+dest2: 256
+thread1: 1
+dest1: 256
+thread0: 0
+
+states: 303030 X
+threads: 0101
+pc0:     3
+pc1:     1
+reg[i]:     x i:     0
+reg[i]:     x i:     1
+reg[i]:     x i:     2
+reg[i]:     x i:     3
+reg[i]:     x i:     4
+reg[k]:     3 k:   256
+reg[k]:     x k:   257
+reg[k]:     x k:   258
+reg[k]:     x k:   259
+reg[k]:     x k:   260
+thread1: 0
+dest1: 256
+thread2: 1
+dest2: 256
+thread3: 0
+
+states: 30303030
+threads: 1010
+pc0:     3
+pc1:     1
+reg[i]:     x i:     0
+reg[i]:     x i:     1
+reg[i]:     x i:     2
+reg[i]:     x i:     3
+reg[i]:     x i:     4
+reg[k]:     3 k:   256
+reg[k]:     x k:   257
+reg[k]:     x k:   258
+reg[k]:     x k:   259
+reg[k]:     x k:   260
+thread3: 1
+thread2: 0
+dest2: 256
+thread1: 1
+dest1: 256
+thread0: 0
+
+states: 30303030
+threads: 0101
+pc0:     4
+pc1:     1
+reg[i]:     x i:     0
+reg[i]:     x i:     1
+reg[i]:     x i:     2
+reg[i]:     x i:     3
+reg[i]:     x i:     4
+reg[k]:     3 k:   256
+reg[k]:     x k:   257
+reg[k]:     x k:   258
+reg[k]:     x k:   259
+reg[k]:     x k:   260
+thread1: 0
+dest1: 256
+thread2: 1
+dest2: 256
+thread3: 0
+
+states: 30303030
+threads: 1010
+pc0:     4
+pc1:     1
+reg[i]:     x i:     0
+reg[i]:     x i:     1
+reg[i]:     x i:     2
+reg[i]:     x i:     3
+reg[i]:     x i:     4
+reg[k]:     3 k:   256
+reg[k]:     x k:   257
+reg[k]:     x k:   258
+reg[k]:     x k:   259
+reg[k]:     x k:   260
+thread3: 1
+thread2: 0
+dest2: 256
+thread1: 1
+dest1: 256
+thread0: 0
+
+states: 30303030
+threads: 0101
+pc0:     5
+pc1:     1
+reg[i]:     x i:     0
+reg[i]:     x i:     1
+reg[i]:     x i:     2
+reg[i]:     x i:     3
+reg[i]:     x i:     4
+reg[k]:     3 k:   256
+reg[k]:     x k:   257
+reg[k]:     x k:   258
+reg[k]:     x k:   259
+reg[k]:     x k:   260
+thread1: 0
+dest1: 256
+thread2: 1
+dest2: 256
+thread3: 0
+
+states: 30303030
+threads: 1010
+pc0:     5
+pc1:     1
+reg[i]:     x i:     0
+reg[i]:     x i:     1
+reg[i]:     x i:     2
+reg[i]:     x i:     3
+reg[i]:     x i:     4
+reg[k]:     3 k:   256
+reg[k]:     x k:   257
+reg[k]:     x k:   258
+reg[k]:     x k:   259
+reg[k]:     x k:   260
+thread3: 1
+thread2: 0
+dest2: 256
+thread1: 1
+dest1: 256
+thread0: 0
+
+states: 30303030
+threads: 0101
+pc0:     6
+pc1:     1
+reg[i]:     x i:     0
+reg[i]:     x i:     1
+reg[i]:     x i:     2
+reg[i]:     x i:     3
+reg[i]:     x i:     4
+reg[k]:     3 k:   256
+reg[k]:     x k:   257
+reg[k]:     x k:   258
+reg[k]:     x k:   259
+reg[k]:     x k:   260
+thread1: 0
+dest1: 256
+thread2: 1
+dest2: 256
+thread3: 0
+
+states: 30303030
+threads: 1010
+pc0:     6
+pc1:     1
+reg[i]:     x i:     0
+reg[i]:     x i:     1
+reg[i]:     x i:     2
+reg[i]:     x i:     3
+reg[i]:     x i:     4
+reg[k]:     3 k:   256
+reg[k]:     x k:   257
+reg[k]:     x k:   258
+reg[k]:     x k:   259
+reg[k]:     x k:   260
+thread3: 1
+thread2: 0
+dest2: 256
+thread1: 1
+dest1: 256
+thread0: 0
+
+states: 30303030
+threads: 0101
+pc0:     7
+pc1:     1
+reg[i]:     x i:     0
+reg[i]:     x i:     1
+reg[i]:     x i:     2
+reg[i]:     x i:     3
+reg[i]:     x i:     4
+reg[k]:     3 k:   256
+reg[k]:     x k:   257
+reg[k]:     x k:   258
+reg[k]:     x k:   259
+reg[k]:     x k:   260
+thread1: 0
+dest1: 256
+thread2: 1
+dest2: 256
+thread3: 0
+
+states: 30303030
+threads: 1010
+pc0:     7
+pc1:     1
+reg[i]:     x i:     0
+reg[i]:     x i:     1
+reg[i]:     x i:     2
+reg[i]:     x i:     3
+reg[i]:     x i:     4
+reg[k]:     3 k:   256
+reg[k]:     x k:   257
+reg[k]:     x k:   258
+reg[k]:     x k:   259
+reg[k]:     x k:   260
+thread3: 1
+thread2: 0
+dest2: 256
+thread1: 1
+dest1: 256
+thread0: 0
+
 
 
 ********** Test 3 **********
