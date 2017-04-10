@@ -91,7 +91,7 @@ always @(reset) begin
   halt [0] = 0;
 
   //stage 0
-  pc [1] = -1; 
+  pc [1] = -1; //* Changed from 0 to -1
   pc [0] = -1;
   thread[0] = 0;//starts with thread 0
 
@@ -723,7 +723,7 @@ end
 endmodule
 
 module testbench;
-	reg [15:0] i;
+	reg [15:0] i; //added for extra clock cycles
 	reg reset = 0;
 	reg clk = 0;
 	wire [1:0] halted = 0;
@@ -737,7 +737,7 @@ module testbench;
  	   		#10 clk = 1;
     			#10 clk = 0;
   		end
-		for( i = 0; i < 6; i = i + 1) begin
+		for( i = 0; i < 6; i = i + 1) begin //extra clock cycles
                 #10 clk = 1;
 		#10 clk = 0;
                 end
