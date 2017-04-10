@@ -487,8 +487,14 @@ begin
 
 	`PushOp: begin
 	//d=sp+1; ++sp; reg[d]=prefix(sign_extend(immed12));
-                stackregs[dest[2]] = {pre[thread[2]], immediate[2]};//taken care of
+		if( loaded[thread[2]] ) begin
+                	stackregs[dest[2]] = {pre[thread[2]], immediate[2]};//taken care of
+		end
+		else begin
+			stackregs[dest[2]] = {4'b0000, immediate[2]};
+		end
 		pcwriteflag = 0;
+		$display("2Push");
 	end
 	
 	`DupOp: begin
