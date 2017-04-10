@@ -82,6 +82,7 @@ reg `IMMEDIATE immediate [3:0];// immediate from instruction for each stage (0 i
 
 //other
 reg [15:0] i; //for test feedback
+reg [15:0] k; //test feedback
 reg `WORD mainmem `MEMSIZE; 
 
 
@@ -564,6 +565,9 @@ begin
 	for( i = 0; i < 5; i = i + 1) begin
                  $display("reg[i]: %d i: %d", stackregs[i], i);
                 end
+	for (k = 256; k < 261; k = k+1) begin
+		$display("reg[k]: %d k: %d", stackregs[k], k);
+	end
 end
 
 //stage3
